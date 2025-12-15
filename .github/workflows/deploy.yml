@@ -116,4 +116,4 @@ jobs:
           cluster: ${{ secrets.ECS_CLUSTER }}
           task-definition: ${{ steps.render-task.outputs.task-definition }}
           wait-for-service-stability: true
-          
+      
