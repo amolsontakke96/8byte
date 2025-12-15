@@ -54,3 +54,17 @@ jobs:
         run: |
           IMAGE_TAG=${{ github.sha }}
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:$IMAGE_TAG
+
+  scan:
+    name: Vulnerability scan
+    needs: build_and_push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
+      
+      - name: Scan Docker Image
+        run: |
+          IMAGE_TAG=${{ github.sha }}
+          trivy image ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:$IMAGE_TAG
