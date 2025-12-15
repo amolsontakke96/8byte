@@ -104,3 +104,4 @@ jobs:
           cluster: ${{ secrets.ECS_CLUSTER }}
           task-definition: ecs-task-def.json
           wait-for-service-stability: true
+          
